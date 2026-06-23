@@ -1,0 +1,4 @@
+#!/command/with-contenv bash
+export HOME=/home/appuser
+cd /app
+s6-setuidgid appuser alembic upgrade head

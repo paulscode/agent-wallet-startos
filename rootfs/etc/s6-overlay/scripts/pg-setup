@@ -1,0 +1,7 @@
+#!/command/with-contenv bash
+PG_BIN=$(ls -d /usr/lib/postgresql/*/bin | head -1)
+until s6-setuidgid postgres "$PG_BIN/pg_isready" -h 127.0.0.1 -p 5432 >/dev/null 2>&1; do sleep 1; done
+s6-setuidgid postgres "$PG_BIN/psql" -v ON_ERROR_STOP=1 -c "ALTER USER postgres WITH PASSWORD '${POSTGRES_PASSWORD}';"
+if ! s6-setuidgid postgres "$PG_BIN/psql" -tAc "SELECT 1 FROM pg_database WHERE datname='agent_btc_wallet'" | grep -q 1; then
+  s6-setuidgid postgres "$PG_BIN/createdb" agent_btc_wallet
+fi

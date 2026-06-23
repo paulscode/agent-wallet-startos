@@ -1,0 +1,13 @@
+#!/command/with-contenv bash
+install -d -o debian-tor -g debian-tor /data/tor
+# One SOCKS listener per anonymize call-site (9050-9057), each circuit-isolated,
+# mirroring the native tor-proxy. Plus a control port for NEWNYM circuit rotation.
+args=(--DataDirectory /data/tor --Log "notice stdout")
+for p in 9050 9051 9052 9053 9054 9055 9056 9057; do
+  args+=(--SocksPort "127.0.0.1:${p} IsolateDestAddr IsolateDestPort IsolateSOCKSAuth")
+done
+if [ -n "${TOR_CONTROL_PASSWORD}" ]; then
+  hash=$(tor --hash-password "${TOR_CONTROL_PASSWORD}" 2>/dev/null | tail -1)
+  [ -n "$hash" ] && args+=(--ControlPort "127.0.0.1:9100" --HashedControlPassword "$hash")
+fi
+exec s6-setuidgid debian-tor tor "${args[@]}"

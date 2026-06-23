@@ -1,0 +1,27 @@
+#!/command/with-contenv bash
+# BOLT 12 onion-message gateway (bare-LDK daemon). Receives invoice_request
+# onion messages for the wallet's published offers (e.g. Ocean payouts) and
+# routes them to the wallet over loopback gRPC; the wallet mints invoices via
+# its own LND. Owns no funds, channels, or preimages.
+#
+# Runs only when the BOLT 12 toggle is on: the version layer (main.ts on 0.4.x,
+# docker_entrypoint.sh on 0.3.x) sets BOLT12_GATEWAY_GRPC to the loopback target
+# when enabled and leaves it empty when off. When off, idle without restart-
+# looping so the service slot stays put cheaply.
+if [ -z "${BOLT12_GATEWAY_GRPC:-}" ]; then
+  echo "bolt12-gateway: BOLT 12 disabled in config; gateway not started"
+  exec sleep infinity
+fi
+
+# The gateway binds loopback (the wallet is co-resident), so the privileged RPC
+# surface is never exposed off-host; the shared token still authenticates it.
+export BOLT12_GATEWAY_CONFIG=/etc/bolt12-gateway/config.toml
+export BOLT12_GATEWAY_GRPC_LISTEN=127.0.0.1:50061
+export BOLT12_GATEWAY_NETWORK="${BITCOIN_NETWORK:-bitcoin}"
+export BOLT12_GATEWAY_SOCKS5_PROXY=127.0.0.1:9050
+export BOLT12_GATEWAY_ENVIRONMENT=production
+# BOLT12_GATEWAY_TOKEN is already in the environment (generated with the other
+# secrets); the wallet dials the gateway with the same value.
+
+install -d -m 0700 -o appuser /data/bolt12-gateway
+exec s6-setuidgid appuser /usr/local/bin/bolt12-gateway

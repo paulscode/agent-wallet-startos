@@ -1,0 +1,11 @@
+# BOLT 12 onion-message gateway configuration for the StartOS package.
+#
+# The s6 run script overrides grpc_listen / network / auth_token / socks5_proxy
+# from the container environment; data_dir and bootstrap_peers are taken from
+# here. The node-identity seed is written under /data so it persists across
+# restarts and is captured by backups. Peering is driven at runtime by the
+# wallet (SetStickyPeers), so no static bootstrap peers are listed.
+data_dir = "/data/bolt12-gateway"
+grpc_listen = "127.0.0.1:50061"
+network = "mainnet"
+bootstrap_peers = []

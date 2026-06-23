@@ -1,0 +1,6 @@
+#!/command/with-contenv bash
+export HOME=/home/appuser
+cd /app
+exec s6-setuidgid appuser celery -A app.tasks.boltz_tasks.celery_app worker \
+  --loglevel=info --concurrency=2 --max-tasks-per-child=50 \
+  -B --schedule=/tmp/celerybeat-schedule

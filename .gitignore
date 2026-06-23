@@ -1,0 +1,11 @@
+*.s9pk
+builds/
+internal_docs/
+startos/*.js
+scripts/*.js
+node_modules/
+.DS_Store
+.vscode/
+docker-images
+javascript
+ncc-cache

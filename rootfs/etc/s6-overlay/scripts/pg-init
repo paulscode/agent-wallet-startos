@@ -1,0 +1,6 @@
+#!/command/with-contenv bash
+PG_BIN=$(ls -d /usr/lib/postgresql/*/bin | head -1)
+install -d -o postgres -g postgres -m 700 /data/postgres
+if [ ! -s /data/postgres/PG_VERSION ]; then
+  s6-setuidgid postgres "$PG_BIN/initdb" -D /data/postgres -E UTF8 --auth-local=trust --auth-host=md5
+fi
