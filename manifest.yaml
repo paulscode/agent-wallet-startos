@@ -1,7 +1,13 @@
 id: agent-wallet
 title: "Agent Wallet"
-version: 0.1.0.0
-release-notes: "Initial release."
+version: 0.1.1.0
+release-notes: >-
+  Tracks upstream Agent Wallet v0.1.1. Adds small-channel peer discovery (a
+  vetted peer catalog plus an onboarding peer picker) and a channel-mix planner
+  for opening several small channels in one pass, along with dashboard, BOLT 12,
+  and Boltz reverse-swap refinements. Fixes PostgreSQL connection-pool
+  exhaustion under reverse-swap load and the reverse-swap max-amount
+  calculation.
 license: MIT
 wrapper-repo: "https://github.com/paulscode/agent-wallet-startos"
 upstream-repo: "https://github.com/paulscode/agent-wallet"
