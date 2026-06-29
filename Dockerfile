@@ -14,12 +14,13 @@
 # Its binary is copied in below and supervised by s6; the BOLT 12 config toggle
 # gates whether it runs.
 #
-# Pinned by digest for the 0.1.1.0 release so an install is reproducible from a
+# Pinned by digest for the 0.1.2.0 release so an install is reproducible from a
 # fixed, tested image set. Both are multi-arch (linux/amd64 + linux/arm64).
-#   APP_IMAGE     paulscode/agent-wallet:0.1.1.0
-#   GATEWAY_IMAGE paulscode/agent-wallet-bolt12-gateway:0.1.1.0
+#   APP_IMAGE     paulscode/agent-wallet:0.1.2.0
+#   GATEWAY_IMAGE paulscode/agent-wallet-bolt12-gateway:0.1.2.0
+# (The gateway is unchanged since 0.1.1.0, so its digest is identical.)
 # Override for a dev build, e.g. --build-arg APP_IMAGE=paulscode/agent-wallet:edge
-ARG APP_IMAGE=paulscode/agent-wallet@sha256:70a023f75885413678288493b6d21b05cec48aa73c86a010257e5f4e17e72dde
+ARG APP_IMAGE=paulscode/agent-wallet@sha256:96476aaf40233a3a13f0c797e59337ce0b6d89197edc4d6132f1bf7981084c5f
 ARG GATEWAY_IMAGE=paulscode/agent-wallet-bolt12-gateway@sha256:66980147c568ea5e148bcf27d929cee41306bd00f318ef27ca5a78cf0353820d
 
 FROM ${GATEWAY_IMAGE} AS gateway
