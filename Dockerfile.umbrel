@@ -10,13 +10,13 @@
 # Built and pushed by agent-wallet-umbrel/build-umbrel-images.sh as
 # paulscode/agent-wallet-umbrel (multi-arch linux/amd64 + linux/arm64).
 #
-# Pinned by digest for the 0.4.1.1 Umbrel release. The gateway is unchanged
-# since 0.1.1.0 (same digest); the app carries the v0.4.1.1 CSP-safe channel
-# status labels + clearer skip copy (plus all prior 0.4.1 fixes).
-#   APP_IMAGE     paulscode/agent-wallet:0.4.1.1
+# Pinned by digest for the 0.4.1.2 Umbrel release. The gateway is unchanged
+# since 0.1.1.0 (same digest); the app drops the inert bootstrap final-push
+# option (plus all prior 0.4.1.x fixes).
+#   APP_IMAGE     paulscode/agent-wallet:0.4.1.2
 #   GATEWAY_IMAGE paulscode/agent-wallet-bolt12-gateway:0.1.3.0
 # Override for a dev build, e.g. --build-arg APP_IMAGE=paulscode/agent-wallet:edge
-ARG APP_IMAGE=paulscode/agent-wallet@sha256:41e7c6f794ae4096b1430539ef36ab8a0480f0f98ce42062640f767dbf22d779
+ARG APP_IMAGE=paulscode/agent-wallet@sha256:f79f9cabcd474fc0e35aee3707633d8d774db4ee87750a7b0b52fc36fd798264
 ARG GATEWAY_IMAGE=paulscode/agent-wallet-bolt12-gateway@sha256:66980147c568ea5e148bcf27d929cee41306bd00f318ef27ca5a78cf0353820d
 
 FROM ${GATEWAY_IMAGE} AS gateway
