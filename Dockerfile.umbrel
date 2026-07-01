@@ -10,15 +10,14 @@
 # Built and pushed by agent-wallet-umbrel/build-umbrel-images.sh as
 # paulscode/agent-wallet-umbrel (multi-arch linux/amd64 + linux/arm64).
 #
-# Pinned by digest for the 0.4.6.0 Umbrel release. The gateway is unchanged
-# since 0.1.1.0 (same digest); the app persists the onboarding-skip flag
-# server-side (node-scoped) so onboarding reappears on a fresh node/install
-# (plus all prior 0.4.x features). Adds a DB migration, applied automatically
-# by the container's alembic step on upgrade.
-#   APP_IMAGE     paulscode/agent-wallet:0.4.6.0
+# Pinned by digest for the 0.4.7.0 Umbrel release. The gateway is unchanged
+# since 0.1.1.0 (same digest); the app fixes onboarding to carry the chosen
+# funding plan into the connect step (reactive-state fix), plus all prior
+# 0.4.x features (incl. the 0.4.6 onboarding-skip DB migration).
+#   APP_IMAGE     paulscode/agent-wallet:0.4.7.0
 #   GATEWAY_IMAGE paulscode/agent-wallet-bolt12-gateway:0.1.3.0
 # Override for a dev build, e.g. --build-arg APP_IMAGE=paulscode/agent-wallet:edge
-ARG APP_IMAGE=paulscode/agent-wallet@sha256:6e9c995835f65b63dfa32ea11e386f86d5e0db939ed546d0e0ba154d7e8cd0a1
+ARG APP_IMAGE=paulscode/agent-wallet@sha256:85c5ee9df88073b4eb165be88f030203060022fecdb79b135b4855f254d46c14
 ARG GATEWAY_IMAGE=paulscode/agent-wallet-bolt12-gateway@sha256:66980147c568ea5e148bcf27d929cee41306bd00f318ef27ca5a78cf0353820d
 
 FROM ${GATEWAY_IMAGE} AS gateway
