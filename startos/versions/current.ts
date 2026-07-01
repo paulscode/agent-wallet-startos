@@ -1,18 +1,19 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.1.2:0',
+  version: '0.4.17:0',
   releaseNotes: {
     en_US:
-      'Tracks upstream Agent Wallet v0.1.2. Fixes reverse swaps failing with a ' +
-      'Boltz "invalid pair hash" error (cold-storage Lightning withdrawals, ' +
-      'Open Inbound to wallet, channel-mix rebalances, and channel-funded ' +
-      'Braiins deposits), and Braiins deposits stalling at "awaiting ' +
-      'confirmation" when the chain indexer is briefly unreachable (now falls ' +
-      'back to LND). Small-channel Braiins deposits open to the most economic ' +
-      'vetted catalog peer with automatic fallback; the routing-headroom fee ' +
-      'line has an explanatory info popover; and the tip-the-developer flow ' +
-      'drops a redundant step.',
+      'Tracks upstream Agent Wallet v0.4.17 — a large update bringing everything ' +
+      'since v0.1.2. Headline: capital-efficient inbound (receive) liquidity ' +
+      'building that opens a channel, swaps its balance back on-chain, and ' +
+      'reuses the funds to build several times your starting amount — now with a ' +
+      'thorough reliability pass so automated builds no longer stall ("Event ' +
+      'loop is closed", "peer not online", stuck reverse-swap payments, or LND ' +
+      'anchor-reserve rejections). The build progress view survives a page ' +
+      'refresh, every on-chain step links to your mempool explorer, and a ' +
+      'failed build can be retried from a dashboard banner. See the upstream ' +
+      'changelog for the full 0.1.3-0.4.17 history.',
   },
   migrations: {
     up: async ({ effects }) => {},
