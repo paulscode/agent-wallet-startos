@@ -10,17 +10,16 @@
 # Built and pushed by agent-wallet-umbrel/build-umbrel-images.sh as
 # paulscode/agent-wallet-umbrel (multi-arch linux/amd64 + linux/arm64).
 #
-# Pinned by digest for the 0.4.17.0 Umbrel release. The gateway is unchanged
-# since 0.1.1.0 (same digest); the app lets a failed inbound build be re-run:
-# retrying an identical plan no longer returns the old dead run (the
-# plan-token digest is no longer UNIQUE — migration 051 — and execute only
-# folds duplicates into a non-terminal run). Carries forward 0.4.16 (failed-run
-# banner), 0.4.15 (anchor-reserve sizing), 0.4.14 (mempool links), and all
-# prior 0.4.x work.
-#   APP_IMAGE     paulscode/agent-wallet:0.4.17.0
+# Pinned by digest for the 0.4.18.0 Umbrel release. The gateway is unchanged
+# since 0.1.1.0 (same digest); the app fixes a recycled Efficient/bootstrap
+# round wedging the whole run when its claim txid wasn't recorded (a completed
+# drain swap with no persisted claim_txid now settles the round regardless).
+# Carries forward 0.4.17 (retry a failed build), 0.4.16 (failed-run banner),
+# 0.4.15 (anchor-reserve sizing), and all prior 0.4.x work.
+#   APP_IMAGE     paulscode/agent-wallet:0.4.18.0
 #   GATEWAY_IMAGE paulscode/agent-wallet-bolt12-gateway:0.1.3.0
 # Override for a dev build, e.g. --build-arg APP_IMAGE=paulscode/agent-wallet:edge
-ARG APP_IMAGE=paulscode/agent-wallet@sha256:51f600e7a3664e2875cc65197a5d067e6afee341a24a320e5676c131f3d497b3
+ARG APP_IMAGE=paulscode/agent-wallet@sha256:be7c50865771b4e3c48fbfdb3351b502e2749fc61100fcdb99e91b77dd18c8a7
 ARG GATEWAY_IMAGE=paulscode/agent-wallet-bolt12-gateway@sha256:66980147c568ea5e148bcf27d929cee41306bd00f318ef27ca5a78cf0353820d
 
 FROM ${GATEWAY_IMAGE} AS gateway

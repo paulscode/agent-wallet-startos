@@ -14,15 +14,15 @@
 # Its binary is copied in below and supervised by s6; the BOLT 12 config toggle
 # gates whether it runs.
 #
-# Pinned by digest for the 0.4.17.0 release so an install is reproducible from a
+# Pinned by digest for the 0.4.18.0 release so an install is reproducible from a
 # fixed, tested image set. Both are multi-arch (linux/amd64 + linux/arm64). This
-# is the same app + gateway image set the 0.4.17.0 Umbrel wrapper pins, so both
+# is the same app + gateway image set the 0.4.18.0 Umbrel wrapper pins, so both
 # packages run byte-identical binaries.
-#   APP_IMAGE     paulscode/agent-wallet:0.4.17.0
+#   APP_IMAGE     paulscode/agent-wallet:0.4.18.0
 #   GATEWAY_IMAGE paulscode/agent-wallet-bolt12-gateway:0.1.3.0
 # (The gateway is unchanged since 0.1.1.0, so its digest is identical.)
 # Override for a dev build, e.g. --build-arg APP_IMAGE=paulscode/agent-wallet:edge
-ARG APP_IMAGE=paulscode/agent-wallet@sha256:51f600e7a3664e2875cc65197a5d067e6afee341a24a320e5676c131f3d497b3
+ARG APP_IMAGE=paulscode/agent-wallet@sha256:be7c50865771b4e3c48fbfdb3351b502e2749fc61100fcdb99e91b77dd18c8a7
 ARG GATEWAY_IMAGE=paulscode/agent-wallet-bolt12-gateway@sha256:66980147c568ea5e148bcf27d929cee41306bd00f318ef27ca5a78cf0353820d
 
 FROM ${GATEWAY_IMAGE} AS gateway
