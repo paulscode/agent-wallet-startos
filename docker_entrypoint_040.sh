@@ -30,9 +30,24 @@ export TRUSTED_PROXIES="${TRUSTED_PROXIES:-172.16.0.0/12}"
 # LND on StartOS serves a self-signed TLS cert. The app pins it (LND_TLS_CERT is
 # read from the mounted LND volume by main.ts / the 0.3.x shim) — but it only
 # *uses* the pinned cert when verification against system CAs is off. So disable
-# the system-CA verification; the pinned cert (with LND's `lnd.startos` SAN) is
-# what's actually trusted.
+# the system-CA verification; the pinned cert is what's actually trusted.
 export LND_TLS_VERIFY="${LND_TLS_VERIFY:-false}"
+
+# Pinning the cert is only half of it — TLS also checks that the cert vouches for
+# the NAME we dial. StartOS 0.4.0's LND issues a cert whose SANs are IP addresses
+# only (no `lnd.startos` DNS entry), so dialing the hostname fails with
+# "Hostname mismatch" against the very cert we pin. It does carry the container's
+# own address, so when the hostname isn't covered we dial the address it resolves
+# to instead. Verification stays fully on; only the asserted name changes. If the
+# cert does carry the hostname (0.3.x's `lnd.embassy`, or a future LND that adds
+# the SAN back), the hostname wins — this only steps in where it must.
+if [ -n "${LND_REST_URL:-}" ] && [ -n "${LND_TLS_CERT:-}" ]; then
+  LND_REST_TARGET="$(python3 /usr/local/bin/lnd_rest_target.py 2>/dev/null || true)"
+  if [ -n "$LND_REST_TARGET" ] && [ "$LND_REST_TARGET" != "$LND_REST_URL" ]; then
+    echo "agent-wallet: LND cert does not cover $LND_REST_URL; using $LND_REST_TARGET"
+    export LND_REST_URL="$LND_REST_TARGET"
+  fi
+fi
 
 # Chain backend: `auto` prefers the selected Electrum indexer but falls back to
 # the local Mempool, so a syncing/unreachable indexer doesn't block the dashboard

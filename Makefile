@@ -30,7 +30,8 @@ BUILD_DIR := builds/$(PKG_VERSION)
 STARTOS_FILES := $(shell find startos -type f 2>/dev/null)
 # Anything that affects the bundled image (invalidates a repack when changed).
 IMAGE_FILES := Dockerfile docker_entrypoint_040.sh docker_entrypoint.sh \
-               assets/scripts/health-check.sh $(wildcard rootfs/**/*) $(wildcard rootfs/*)
+               assets/scripts/health-check.sh assets/scripts/lnd_rest_target.py \
+               $(wildcard rootfs/**/*) $(wildcard rootfs/*)
 
 .DELETE_ON_ERROR:
 .PHONY: all 040 040-x86_64 040-aarch64 \

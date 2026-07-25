@@ -65,6 +65,7 @@ COPY rootfs/ /
 COPY docker_entrypoint_040.sh /usr/local/bin/docker_entrypoint_040.sh
 COPY docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 COPY assets/scripts/health-check.sh /usr/local/bin/health-check.sh
+COPY assets/scripts/lnd_rest_target.py /usr/local/bin/lnd_rest_target.py
 # BOLT 12 onion-message gateway binary (from its published image).
 COPY --from=gateway /usr/local/bin/bolt12-gateway /usr/local/bin/bolt12-gateway
 RUN chmod +x /usr/local/bin/docker_entrypoint_040.sh \
