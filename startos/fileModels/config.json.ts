@@ -13,7 +13,11 @@ export const configJson = FileHelper.json(
     subpath: '/config.json',
   },
   z.object({
-    mempool: z.enum(['mempool', 'mempool-rdts']).catch('mempool-rdts'),
+    // Defaults to the official Mempool. Mempool BIP-110 / RDTS is retired; an
+    // install that chose it keeps it (see the migration in versions/current.ts).
+    mempool: z
+      .enum(['mempool', 'mempool-pruned', 'mempool-rdts'])
+      .catch('mempool'),
     // 0.4.x defaults to Fulcrum (see actions/config.ts); the 0.3.x package
     // defaults to Electrs.
     indexer: z.enum(['electrs', 'fulcrum']).catch('fulcrum'),

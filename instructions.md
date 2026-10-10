@@ -18,8 +18,9 @@ Install these StartOS services first:
 - **LND** — required. Agent Wallet connects to it over its REST API.
 - **An Electrum indexer** — **Electrs** *or* **Fulcrum**. Pick one in the config;
   it must be installed and synced.
-- **A Mempool explorer** — **Mempool** *or* **Mempool BIP-110 / RDTS**. Pick one in
-  the config; it must be installed.
+- **A Mempool explorer** — **Mempool** (the default) *or* **Mempool Pruned**. Pick one
+  in the config; it must be installed. Mempool BIP-110 / RDTS is retired, and stays
+  selectable only for installs already using it.
 
 ## First use
 

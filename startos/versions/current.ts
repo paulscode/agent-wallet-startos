@@ -1,30 +1,42 @@
+import { readFile } from 'fs/promises'
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
+import { configJson } from '../fileModels/config.json'
+import { sdk } from '../sdk'
 
 export const current = VersionInfo.of({
-  version: '0.4.18:1',
+  version: '0.4.18:2',
   releaseNotes: {
     en_US:
-      'Fixes login failing with "Request timed out — the node may be ' +
-      'unreachable" on StartOS 0.4.0. StartOS 0.4.0 ships an LND whose TLS ' +
-      'certificate no longer covers the name `lnd.startos`, so the connection ' +
-      'was rejected for a hostname mismatch even though the certificate itself ' +
-      'was the right one. Agent Wallet now connects to LND at an address its ' +
-      'certificate does cover. No settings change is needed — update and start. ' +
-      'Same app version as 0.4.18:0 otherwise. ' +
-      'Tracks upstream Agent Wallet v0.4.18 — a large update bringing everything ' +
-      'since v0.1.2. Headline: capital-efficient inbound (receive) liquidity ' +
-      'building that opens a channel, swaps its balance back on-chain, and ' +
-      'reuses the funds to build several times your starting amount — now with a ' +
-      'thorough reliability pass so automated builds no longer stall ("Event ' +
-      'loop is closed", "peer not online", stuck reverse-swap payments, LND ' +
-      'anchor-reserve rejections, or a recycled round whose claim txid was not ' +
-      'recorded). The build progress view survives a page refresh, every ' +
-      'on-chain step links to your mempool explorer, and a failed build can be ' +
-      'retried from a dashboard banner. See the upstream changelog for the full ' +
-      '0.1.3-0.4.18 history.',
+      'The Mempool Explorer setting now defaults to the official Mempool, and ' +
+      'offers Mempool Pruned for a pruned node. Mempool BIP-110 / RDTS is ' +
+      'retired along with the soft fork it was built to visualise, and is no ' +
+      'longer offered for new installs. If you already use it, nothing changes: ' +
+      'your setting is kept, and you can move to another Mempool from the ' +
+      'Configure action whenever you like. ' +
+      'Same app version as 0.4.18:1 otherwise.',
   },
   migrations: {
-    up: async ({ effects }) => {},
+    // The Mempool default moved from mempool-rdts to the official mempool. An
+    // install that never saved a choice would otherwise switch on update to a
+    // Mempool it may not have, so pin it to the old default. Read raw, because the
+    // file model's .catch() would report the new default for a missing value.
+    // Idempotent: a valid saved choice is left exactly as it is.
+    up: async ({ effects }) => {
+      const raw = await readFile(
+        sdk.volumes.main.subpath('/config.json'),
+        'utf8',
+      )
+        .then((t) => JSON.parse(t) as { mempool?: unknown })
+        .catch(() => null)
+      if (
+        raw &&
+        !['mempool', 'mempool-pruned', 'mempool-rdts'].includes(
+          raw.mempool as string,
+        )
+      ) {
+        await configJson.merge(effects, { mempool: 'mempool-rdts' })
+      }
+    },
     down: IMPOSSIBLE,
   },
 })

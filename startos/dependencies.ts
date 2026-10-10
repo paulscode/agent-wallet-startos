@@ -21,15 +21,12 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
     ...(cfg?.indexer === 'electrs'
       ? { electrs: { kind: 'running', versionRange: '>=0.10:0', healthChecks: [] } }
       : { fulcrum: { kind: 'running', versionRange: '>=1.9:0', healthChecks: [] } }),
-    ...(cfg?.mempool === 'mempool'
-      ? { mempool: { kind: 'running', versionRange: '>=3:0', healthChecks: [] } }
-      : {
-          'mempool-rdts': {
-            kind: 'running',
-            versionRange: '>=3:0',
-            healthChecks: [],
-          },
-        }),
+    // Exactly one Mempool, the one selected. The official one is the default.
+    [cfg?.mempool ?? 'mempool']: {
+      kind: 'running',
+      versionRange: '>=3:0',
+      healthChecks: [],
+    },
     ...(cfg?.liquid
       ? {
           'elements-electrs': {

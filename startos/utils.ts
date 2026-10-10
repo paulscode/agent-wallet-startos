@@ -23,6 +23,9 @@ export const indexerHosts = {
 export const mempoolApiPort = 8999
 export const mempoolHosts = {
   mempool: 'mempool.startos',
+  'mempool-pruned': 'mempool-pruned.startos',
+  // Retired with the BIP-110 soft fork it visualised. Kept so an install already
+  // pointed at it keeps working; new installs default to the official Mempool.
   'mempool-rdts': 'mempool-rdts.startos',
 } as const
 

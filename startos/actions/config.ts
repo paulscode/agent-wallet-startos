@@ -20,10 +20,11 @@ export const inputSpec = InputSpec.of({
     description:
       'Which installed Mempool explorer the wallet links to and queries. The selected one must be installed.',
     values: {
-      'mempool-rdts': 'Mempool BIP-110 / RDTS',
       mempool: 'Mempool (official)',
+      'mempool-pruned': 'Mempool Pruned',
+      'mempool-rdts': 'Mempool BIP-110 / RDTS (retired)',
     },
-    default: 'mempool-rdts',
+    default: 'mempool',
   }),
   mempoolExplorerUrl: Value.text({
     name: 'Mempool Explorer URL (for links)',

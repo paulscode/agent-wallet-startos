@@ -19,7 +19,7 @@ payouts). It integrates with installed StartOS services as prerequisites:
 
 - **LND** (always) — over REST, using the cert + macaroon from LND's mounted volume.
 - **One indexer** — Electrs *or* Fulcrum (selected in config).
-- **One Mempool explorer** — official `mempool` *or* `mempool-rdts` (selected in config).
+- **One Mempool explorer** — official `mempool` (default), `mempool-pruned`, or the retired `mempool-rdts`, kept for installs already using it (selected in config).
 - **elements-electrs** (the Liquid Electrum Server) — only when the experimental
   Liquid hop in Anonymize is enabled.
 

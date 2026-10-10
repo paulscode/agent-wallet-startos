@@ -69,9 +69,18 @@ export const manifest = setupManifest({
         icon: 'https://raw.githubusercontent.com/Start9Labs/mempool-startos/master/icon.svg',
       },
     },
+    'mempool-pruned': {
+      description:
+        'Mempool explorer for a pruned node, queried for fees and chain data.',
+      optional: true,
+      metadata: {
+        title: 'Mempool Pruned',
+        icon: 'https://raw.githubusercontent.com/paulscode/mempool-pruned-startos/master/icon.png',
+      },
+    },
     'mempool-rdts': {
       description:
-        'BIP-110 / RDTS Mempool explorer queried for fees and chain data.',
+        'BIP-110 / RDTS Mempool explorer, now retired. Kept for installs already using it.',
       optional: true,
       metadata: {
         title: 'Mempool BIP-110 / RDTS',

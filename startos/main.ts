@@ -84,7 +84,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
   // (auto-detected from the dependency's exported interface — LAN/.local
   // preferred, then its .onion), then the public mempool.space. Read once (not
   // reactive) so a later address change doesn't bounce the service.
-  const mempoolPkgId = cfg.mempool === 'mempool' ? 'mempool' : 'mempool-rdts'
+  const mempoolPkgId = cfg.mempool
   let autoMempoolUrl = ''
   try {
     autoMempoolUrl = await sdk.serviceInterface

@@ -1,24 +1,12 @@
 id: agent-wallet
 title: "Agent Wallet"
-version: 0.4.18.1
+version: 0.4.18.2
 release-notes: >-
-  Fixes login failing with "Request timed out — the node may be unreachable" on
-  StartOS 0.4.0, where the bundled LND serves a TLS certificate that no longer
-  covers the name `lnd.startos` and the connection was rejected for a hostname
-  mismatch. Agent Wallet now connects to LND at an address its certificate does
-  cover, with certificate verification fully intact. StartOS 0.3.5.x is not
-  affected — this build carries the same fix inertly and is otherwise identical
-  to 0.4.18.0, released alongside it to keep version numbering consistent.
-  Tracks upstream Agent Wallet v0.4.18 — a large update bringing everything since
-  v0.1.2. Headline: capital-efficient inbound (receive) liquidity building that
-  opens a channel, swaps its balance back on-chain, and reuses the funds to build
-  several times your starting amount — now with a thorough reliability pass so
-  automated builds no longer stall ("Event loop is closed", "peer not online",
-  stuck reverse-swap payments, LND anchor-reserve rejections, or a recycled round
-  whose claim txid was not recorded). The build progress view survives a page
-  refresh, every on-chain step links to your mempool explorer, and a failed build
-  can be retried from a dashboard banner. See the upstream changelog for the full
-  0.1.3-0.4.18 history.
+  On StartOS 0.4.0, the Mempool Explorer setting now defaults to the official
+  Mempool and offers Mempool Pruned, because Mempool BIP-110 / RDTS is retired
+  along with the soft fork it was built to visualise. StartOS 0.3.5.x is not
+  affected: this build is identical to 0.4.18.1, released alongside it to keep
+  version numbering consistent.
 license: MIT
 wrapper-repo: "https://github.com/paulscode/agent-wallet-startos"
 upstream-repo: "https://github.com/paulscode/agent-wallet"
