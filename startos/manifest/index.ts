@@ -71,7 +71,7 @@ export const manifest = setupManifest({
     },
     'mempool-pruned': {
       description:
-        'Mempool explorer for a pruned node, queried for fees and chain data.',
+        'Mempool explorer for a pruned node, queried for fees and chain data. It must follow the same chain as LND.',
       optional: true,
       metadata: {
         title: 'Mempool Pruned',

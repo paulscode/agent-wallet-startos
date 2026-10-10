@@ -19,7 +19,9 @@ Install these StartOS services first:
 - **An Electrum indexer** — **Electrs** *or* **Fulcrum**. Pick one in the config;
   it must be installed and synced.
 - **A Mempool explorer** — **Mempool** (the default) *or* **Mempool Pruned**. Pick one
-  in the config; it must be installed. Mempool BIP-110 / RDTS is retired, and stays
+  in the config; it must be installed, and it must follow the same chain as LND. Mempool
+  Pruned can be pointed at the BLAKE2b companion node, and then its fees and transaction
+  lookups would come from the other chain. Mempool BIP-110 / RDTS is retired, and stays
   selectable only for installs already using it.
 
 ## First use

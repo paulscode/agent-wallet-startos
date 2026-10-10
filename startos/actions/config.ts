@@ -18,7 +18,7 @@ export const inputSpec = InputSpec.of({
   mempool: Value.select({
     name: 'Mempool Explorer',
     description:
-      'Which installed Mempool explorer the wallet links to and queries. The selected one must be installed.',
+      'Which installed Mempool explorer the wallet links to and queries. The selected one must be installed, and must follow the same chain as LND: Mempool Pruned set to the BLAKE2b companion node would answer fee and transaction lookups from the other chain.',
     values: {
       mempool: 'Mempool (official)',
       'mempool-pruned': 'Mempool Pruned',
