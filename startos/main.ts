@@ -56,7 +56,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
       readonly: true,
     })
 
-  const container = await sdk.SubContainer.of(
+  const container = sdk.SubContainer.of(
     effects,
     { imageId: 'main' },
     mounts,
@@ -65,7 +65,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
 
   // Read LND credentials from the mounted volume. Detect the network subdir
   // (mainnet/testnet/signet/regtest) rather than hardcoding mainnet.
-  const lndRoot = `${container.rootfs}${lndMountpoint}`
+  const lndRoot = `${await container.rootfs}${lndMountpoint}`
   const tlsCertB64 = await readFile(`${lndRoot}/tls.cert`)
     .then((b) => b.toString('base64'))
     .catch(() => '')
@@ -87,8 +87,13 @@ export const main = sdk.setupMain(async ({ effects }) => {
   const mempoolPkgId = cfg.mempool
   let autoMempoolUrl = ''
   try {
-    autoMempoolUrl = await sdk.serviceInterface
-      .get(effects, { id: 'webui', packageId: mempoolPkgId }, (si) => {
+    // Every Mempool flavor exports `webui` from its `main` host. Find the binding
+    // that carries it rather than assuming its internal port.
+    autoMempoolUrl = await sdk.host
+      .get(effects, { hostId: 'main', packageId: mempoolPkgId }, (host) => {
+        const si = Object.values(host?.bindings ?? {})
+          .map((b) => b.interfaces['webui'])
+          .find((i) => !!i)
         const lan = si?.addressInfo?.filter({ kind: 'mdns' }).format() ?? []
         const onion = si?.addressInfo?.public.format() ?? []
         return (lan[0] ?? onion[0] ?? '') as string

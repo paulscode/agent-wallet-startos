@@ -13,14 +13,14 @@ export const storeJson = FileHelper.json(
     base: sdk.volumes.main,
     subpath: '/store.json',
   },
-  z.object({
+  z.looseObject({
     secretKey: z.string().catch(''),
     postgresPassword: z.string().catch(''),
     redisPassword: z.string().catch(''),
     torControlPassword: z.string().catch(''),
     bolt12GatewayToken: z.string().catch(''),
     anonymize: z
-      .object({
+      .looseObject({
         reuseDetectionKeyFernet: z.string().catch(''),
         hopIdempotencyKeyFernet: z.string().catch(''),
         quoteTokenHmacKeyFernet: z.string().catch(''),

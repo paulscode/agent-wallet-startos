@@ -12,7 +12,7 @@ export const configJson = FileHelper.json(
     base: sdk.volumes.main,
     subpath: '/config.json',
   },
-  z.object({
+  z.looseObject({
     // Defaults to the official Mempool. Mempool BIP-110 / RDTS is retired; an
     // install that chose it keeps it (see the migration in versions/current.ts).
     mempool: z

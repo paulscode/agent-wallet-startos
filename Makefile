@@ -16,6 +16,7 @@
 #   make release               BOTH universal packages -> builds/<version>/ + SHA256SUMS
 #   make install-040[-x86_64]  install the matching build to your StartOS server
 #   make install-0351[-x86_64]
+#   make format               format startos/ with the SDK's prettier config
 #   make clean
 #
 # Prerequisites: start-cli, start-sdk, docker buildx, node/npm, deno (0.3.x), yq, jq.
@@ -39,7 +40,7 @@ IMAGE_FILES := Dockerfile docker_entrypoint_040.sh docker_entrypoint.sh \
         release check-0351 _pack-0351 \
         install-040 install-040-x86_64 install-040-aarch64 \
         install-0351 install-0351-x86_64 install-0351-aarch64 \
-        check-init clean
+        check-init clean format
 
 all: 040
 
@@ -57,9 +58,19 @@ $(PKG_ID)-040-x86_64.s9pk: javascript/index.js $(IMAGE_FILES) | check-init
 $(PKG_ID)-040-aarch64.s9pk: javascript/index.js $(IMAGE_FILES) | check-init
 	start-cli s9pk pack --icon icon.svg --arch=aarch64 -o $@
 
+# The same gate as the SDK's s9pk.mk: type check, SDK lint, format check, bundle.
+# The SDK supplies typescript, prettier and ncc.
+SDK_DIR := node_modules/@start9labs/start-sdk
+PRETTIER_CONFIG := $(SDK_DIR)/prettier.config.json
+
 javascript/index.js: $(STARTOS_FILES) tsconfig.json node_modules
-	npm run check
-	npm run build
+	npx tsc --noEmit
+	node $(SDK_DIR)/lint.mjs
+	npx prettier --config $(PRETTIER_CONFIG) --check startos
+	rm -rf javascript && npx ncc build startos/index.ts -o javascript
+
+format: | node_modules
+	npx prettier --config $(PRETTIER_CONFIG) --write startos
 
 node_modules: package.json
 	npm i
