@@ -47,7 +47,8 @@ const electrs = sdk.Dependency.optional('electrs', {
   kind: 'running',
   versionRange: '>=0.10:0',
   healthChecks: [],
-  enabled: async ({ effects }) => (await config(effects))?.indexer === 'electrs',
+  enabled: async ({ effects }) =>
+    (await config(effects))?.indexer === 'electrs',
 })
 
 // Fulcrum is the default: anything other than an explicit Electrs choice.
@@ -60,7 +61,8 @@ const fulcrum = sdk.Dependency.optional('fulcrum', {
   kind: 'running',
   versionRange: '>=1.9:0',
   healthChecks: [],
-  enabled: async ({ effects }) => (await config(effects))?.indexer !== 'electrs',
+  enabled: async ({ effects }) =>
+    (await config(effects))?.indexer !== 'electrs',
 })
 
 // Exactly one Mempool, the one selected. The official one is the default.
@@ -76,7 +78,8 @@ const mempool = sdk.Dependency.optional('mempool', {
   kind: 'running',
   versionRange: '>=3:0',
   healthChecks: [],
-  enabled: async ({ effects }) => (await mempoolSelected(effects)) === 'mempool',
+  enabled: async ({ effects }) =>
+    (await mempoolSelected(effects)) === 'mempool',
 })
 
 const mempoolPruned = sdk.Dependency.optional('mempool-pruned', {

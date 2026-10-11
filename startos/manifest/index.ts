@@ -1,6 +1,7 @@
 import { setupManifest } from '@start9labs/start-sdk'
 
-const short = 'A self-custodial Bitcoin & Lightning wallet with an automation API'
+const short =
+  'A self-custodial Bitcoin & Lightning wallet with an automation API'
 
 const long =
   'Agent Wallet is a self-custodial Bitcoin and Lightning wallet that connects to your own LND node and exposes a dashboard plus a programmatic API designed for AI agents to initiate payments within configured limits. It integrates with an installed Electrum indexer (Electrs or Fulcrum) and a Mempool explorer for on-chain data, and offers an optional, experimental Anonymize feature. Anyone or anything holding the dashboard password or an issued API key can spend from the connected node up to its limits — treat those credentials like a hot wallet.'

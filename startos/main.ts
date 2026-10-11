@@ -103,7 +103,9 @@ export const main = sdk.setupMain(async ({ effects }) => {
     autoMempoolUrl = ''
   }
   const mempoolPublicUrl =
-    (cfg.mempoolExplorerUrl || '').trim() || autoMempoolUrl || 'https://mempool.space'
+    (cfg.mempoolExplorerUrl || '').trim() ||
+    autoMempoolUrl ||
+    'https://mempool.space'
 
   // Dynamic / secret / config-derived environment. Static in-image infrastructure
   // (DATABASE_URL, REDIS_URL, Tor-on-localhost, API_HOST, COOKIE_SECURE, etc.) is
@@ -197,7 +199,10 @@ export const main = sdk.setupMain(async ({ effects }) => {
               )
               .catch(() => null)
             if (res && res.exitCode === 0) {
-              return { result: 'success', message: 'LND and database reachable' }
+              return {
+                result: 'success',
+                message: 'LND and database reachable',
+              }
             }
             return {
               result: 'loading',
