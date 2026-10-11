@@ -14,6 +14,9 @@ export const manifest = setupManifest({
   marketingUrl: 'https://github.com/paulscode/agent-wallet',
   donationUrl: null,
   description: { short, long },
+  // StartOS 0.4.0.2, not the SDK's default, so the registry hides releases from
+  // older servers. Every release from 2026-10-11 on targets 0.4.0.2.
+  osVersion: '0.4.0.2',
   // One data volume holds Postgres, Redis, Tor state, the BOLT 12 gateway state,
   // and the generated secrets/key backups. Dependency volumes (LND) are mounted
   // via mountDependency in main.ts, not declared here.
