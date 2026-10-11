@@ -111,6 +111,11 @@ export const main = sdk.setupMain(async ({ effects }) => {
   // (DATABASE_URL, REDIS_URL, Tor-on-localhost, API_HOST, COOKIE_SECURE, etc.) is
   // set by docker_entrypoint_040.sh, which consumes the passwords passed here.
   const env: Record<string, string> = {
+    // StartOS 0.4.0.2 gives every service process the server's language as
+    // LANG (en_US.UTF-8, say) unless the package sets one. This image has only
+    // the C locales, and Redis 8 exits at startup on a locale it cannot load,
+    // so s6 restarted it every second and the wallet never got its queue.
+    LANG: 'C.UTF-8',
     LOG_LEVEL: cfg.logLevel,
     BITCOIN_NETWORK: network === 'mainnet' ? 'bitcoin' : network,
 

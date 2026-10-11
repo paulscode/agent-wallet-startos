@@ -5,7 +5,10 @@ export const current = VersionInfo.of({
   releaseNotes: {
     en_US:
       'Rebuilt on version 3 of the StartOS packaging SDK, which needs StartOS ' +
-      '0.4.0.2. Nothing you have set changes.',
+      '0.4.0.2. Nothing you have set changes. ' +
+      'Fixes the wallet never finishing startup on StartOS 0.4.0.2: its ' +
+      'internal queue (Redis) refused the server language setting and ' +
+      'restarted every second.',
   },
   migrations: {
     // Nothing to migrate: the SDK changed, and nothing on disk does.
