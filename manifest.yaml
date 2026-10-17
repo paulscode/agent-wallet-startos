@@ -1,12 +1,7 @@
 id: agent-wallet
 title: "Agent Wallet"
-version: 0.4.18.2
-release-notes: >-
-  On StartOS 0.4.0, the Mempool Explorer setting now defaults to the official
-  Mempool and offers Mempool Pruned, because Mempool BIP-110 / RDTS is retired
-  along with the soft fork it was built to visualise. StartOS 0.3.5.x is not
-  affected: this build is identical to 0.4.18.1, released alongside it to keep
-  version numbering consistent.
+version: 0.4.18.4
+release-notes: "No change on StartOS 0.3.5.x. This build keeps the version number in step with the StartOS 0.4.0 release, which moves to the current packaging SDK."
 license: MIT
 wrapper-repo: "https://github.com/paulscode/agent-wallet-startos"
 upstream-repo: "https://github.com/paulscode/agent-wallet"

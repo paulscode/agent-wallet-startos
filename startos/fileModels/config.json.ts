@@ -14,7 +14,7 @@ export const configJson = FileHelper.json(
   },
   z.looseObject({
     // Defaults to the official Mempool. Mempool BIP-110 / RDTS is retired; an
-    // install that chose it keeps it (see the migration in versions/current.ts).
+    // install that chose it keeps it (see the migration in versions/v0_4_18_2.ts).
     mempool: z
       .enum(['mempool', 'mempool-pruned', 'mempool-rdts'])
       .catch('mempool'),
