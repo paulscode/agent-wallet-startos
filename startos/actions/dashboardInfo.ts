@@ -30,6 +30,7 @@ export const dashboardInfo = sdk.Action.withoutInput(
         copyable: true,
         qr: false,
         masked: false,
+        launchable: false,
       },
     }
   },
