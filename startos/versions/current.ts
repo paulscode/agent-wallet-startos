@@ -9,8 +9,7 @@ export const current = VersionInfo.of({
       'Fixes the wallet never finishing startup on StartOS 0.4.0.2: its ' +
       'internal queue (Redis) refused the server language setting and ' +
       'restarted every second. ' +
-      'Uses version 3.0.6 of the packaging SDK, which stops a restart during ' +
-      'startup from leaving the previous run still going.',
+      'Uses version 3.0.6 of the packaging SDK.',
   },
   migrations: {
     // Nothing to migrate: the SDK changed, and nothing on disk does.
